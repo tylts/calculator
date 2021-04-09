@@ -83,3 +83,10 @@ button:hover {
     grid-gap: 20px;
     padding: 20px;
 }
+
+.div-by-zero {
+    font-size: 25px;
+    text-align: center;
+    padding-top: 25px;
+    padding-left: 20px;
+}

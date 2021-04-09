@@ -1,4 +1,4 @@
-// DOM variables
+// query selectors variables
 const digits = document.querySelectorAll('.digit');
 const screen = document.querySelector('.calculator-screen');
 const allClear = document.querySelector('.clear');
@@ -12,7 +12,7 @@ let num2;
 let readyToReset = false;
 let operation = null;
 
-//event listeners
+// event listeners
 digits.forEach((button) =>
     button.addEventListener('click', () =>
         updateScreenNumber(button.textContent)
@@ -33,6 +33,7 @@ function clearScreen() {
     num1 = '';
     num2 = '';
     operation = null;
+    screen.classList.remove('div-by-zero');
 }
 
 function updateScreenNumber(number) {
@@ -49,6 +50,7 @@ function decimalCheck() {
 
 function resetScreen() {
     screen.textContent = '';
+    screen.classList.remove('div-by-zero');
     readyToReset = false;
 }
 
@@ -61,9 +63,19 @@ function setOperation(operator) {
 
 function evaluate() {
     if (operation === null || readyToReset) return;
+    if (operation == '÷' && screen.textContent === '0') {
+        screen.textContent = 'ERROR Cannot divide by 0!';
+        screen.classList.add('div-by-zero');
+        readyToReset = true;
+        num1 = '';
+        num2 = '';
+        operation = null;
+        return;
+    }
     num2 = screen.textContent;
     screen.textContent = roundOutput(operate(operation, num1, num2));
     operation = null;
+    readyToReset = true;
 }
 
 function addition(a, b) {
